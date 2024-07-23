@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import img from "../assets/mypic.jpeg"
 
 const Hero = () => {
   const heroRef = useRef(null);
@@ -27,7 +28,7 @@ const Hero = () => {
     >
       <img
         ref={imgRef}
-        src="../../mypic.jpeg"
+        src={img}
         alt="Aaditya Nema"
         className="w-72 h-auto md:w-80 md:h-auto rounded-full border-4 border-white shadow-lg"
       />
