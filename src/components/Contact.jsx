@@ -96,7 +96,7 @@ const Contact = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full p-2 border rounded bg-[#191919]"
+                className="w-full p-2 border rounded bg-[#191919] text-gray-100  "
                 rows="4"
                 placeholder="TYPE YOUR MESSAGE..."
                 required
