@@ -31,10 +31,17 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://portfolio-backend-two-delta.vercel.app/contact", formData);
+      
+      const apiUrl =
+        import.meta.env.MODE === "development"
+          ? import.meta.env.VITE_DEV_API_URL
+          : import.meta.env.VITE_PROD_API_URL;
+      const response = await axios.post(`${apiUrl}/api/contact`, formData);
       console.log("Form submitted successfully:", response.data);
       setFormData({ name: "", email: "", message: "" });
-      setModalMessage("Your message has been sent successfully. Thank you for reaching out!😊");
+      setModalMessage(
+        "Your message has been sent successfully. Thank you for reaching out!😊"
+      );
       setIsError(false);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -52,31 +59,35 @@ const Contact = () => {
   return (
     <section className="bg-[#C4C4C1] text-gray-900 py-20 dark:bg-[#111111] dark:text-gray-100 flex justify-center items-center">
       <div className="container mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-8 text-orange-800 dark:text-orange-400">Get In Touch</h2>
+        <h2 className="text-5xl font-bold text-center mb-8 text-orange-800 dark:text-orange-400">
+          Get In Touch
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <form
             ref={formRef}
-            className="max-w-lg  md:mx-auto sm:mx-auto lg:mx-20 bg-[#111111] p-8 rounded-xl shadow-md uppercase"
+            className="max-w-lg sm:mx-auto md:mx-auto lg:mx-20 bg-[#111111] p-8 rounded-xl shadow-md uppercase"
             onSubmit={handleSubmit}
           >
             <div className="mb-4">
-              <label className="block text-orange-800  font-bold">Name</label>
+              <label className="block text-orange-800 font-bold">Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full p-2 rounded-2 bg-[#191919]"
+                required
               />
             </div>
             <div className="mb-4">
-              <label className="block text-orange-800  font-bold">Email</label>
+              <label className="block text-orange-800 font-bold">Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full p-2 border  bg-[#191919]"
+                className="w-full p-2 border bg-[#191919]"
+                required
               />
             </div>
             <div className="mb-4">
@@ -88,13 +99,14 @@ const Contact = () => {
                 className="w-full p-2 border rounded bg-[#191919]"
                 rows="4"
                 placeholder="TYPE YOUR MESSAGE..."
+                required
               ></textarea>
             </div>
             <button
               type="submit"
               className="bg-gray-300 text-[#191919] px-6 py-3 rounded hover:bg-gray-400 text-xl font-thin uppercase"
             >
-              submit
+              Submit
             </button>
           </form>
 
@@ -105,6 +117,7 @@ const Contact = () => {
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="Google Maps"
             ></iframe>
             <div className="flex space-x-4">
               <a
@@ -143,8 +156,12 @@ const Contact = () => {
       {showModal && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-gray-200 p-8 rounded-2xl shadow-lg max-w-sm mx-auto text-center">
-            <h3 className={`text-lg font-bold mb-4 ${isError ? "text-red-600" : "text-green-800"}`}>
-              {isError ? "Error" : "message sent"}
+            <h3
+              className={`text-lg font-bold mb-4 ${
+                isError ? "text-red-600" : "text-green-800"
+              }`}
+            >
+              {isError ? "Error" : "Message Sent"}
             </h3>
             <p className="mb-4 text-gray-900 font-semibold">{modalMessage}</p>
             <button
